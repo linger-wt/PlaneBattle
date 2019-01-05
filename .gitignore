@@ -1,0 +1,11 @@
+/ipch/
+/Win32/
+/x64/
+/Debug/
+/Release/
+/GeneratedFiles/
+
+.user
+.opensdf
+.sdf
+.suo
