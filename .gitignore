@@ -5,7 +5,7 @@
 /Release/
 /GeneratedFiles/
 
-.user
-.opensdf
-.sdf
-.suo
+*.user
+*.opensdf
+*.sdf
+*.suo
