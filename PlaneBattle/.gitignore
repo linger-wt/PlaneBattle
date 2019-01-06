@@ -4,8 +4,9 @@
 /Debug/
 /Release/
 /GeneratedFiles/
+/Resources/
 
-.user
-.opensdf
-.sdf
-.suo
+*.user
+*.opensdf
+*.sdf
+*.suo
