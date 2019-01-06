@@ -14,7 +14,7 @@ CTSceneItem::CTSceneItem(CTEntityPtr pEntity)
 	size.setWidth(entityWidth);
 	size.setHeight(pix.height()/(float)pix.width()*entityWidth);
 	pEntity->setSize(size);
-	pix.scaled(pEntity->getSize(), Qt::KeepAspectRatio); // 图标根据实体大小进行缩放
+	pix = pix.scaled(pEntity->getSize(), Qt::KeepAspectRatio); // 图标根据实体大小进行缩放
 	setPixmap(pix); // 设置图标
 
 	connect(&m_hitCheckTimer, SIGNAL(timeout()), this, SLOT(onHitChectTimer()));

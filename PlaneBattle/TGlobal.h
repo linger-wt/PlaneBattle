@@ -1,7 +1,8 @@
 #pragma once
-#include <TSingleton.h>
+#include "TSingleton.h"
 #include "TModelManager.h"
 #include "TControler.h"
+#include "TScene.h"
 
 class CTGlobal : public CTSingleton<CTGlobal>
 {
@@ -11,7 +12,7 @@ public:
 	~CTGlobal(void);
 
 	/* 初始化 */
-	bool init();
+	bool initApplication();
 	
 	/* 获取模型管理 */
 	CTModelManagerPtr getModelManager();
@@ -19,8 +20,12 @@ public:
 	/* 获取控制器 */
 	CTControlerPtr getControler();
 
+	/* 获取场景 */
+	CTScenePtr getScene();
+
 private:
-	CTModelManagerPtr m_modelManager; // 模型管理
-	CTControlerPtr m_controler; // 控制器
+	CTModelManagerPtr m_pModelManager; // 模型管理
+	CTControlerPtr m_pControler; // 控制器
+	CTScenePtr m_pScene; // 场景
 };
 

@@ -9,6 +9,8 @@
 /* 场景类 */
 class CTScene : public QGraphicsScene
 {
+	Q_OBJECT
+
 public:
 	CTScene(void);
 	~CTScene(void);
@@ -18,6 +20,9 @@ public:
 
 	/* 实体坐标到场景坐标的转换 */
 	QPointF coordinateEntityToScene(QPointF pos);
+
+	/* 场景坐标到实体坐标的转换 */
+	QPointF coordinateSceneToEntity(QPointF pos);
 
 	/* 增加item，与现有实体绑定 */
 	void addItemToScene(CTEntityPtr entity);
@@ -51,4 +56,6 @@ private:
 
 	CTEntityPtr m_pControlerEntity; // 控制者实体
 };
+
+typedef std::shared_ptr<CTScene> CTScenePtr;
 

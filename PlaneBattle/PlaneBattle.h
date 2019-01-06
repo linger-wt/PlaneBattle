@@ -1,10 +1,12 @@
 #ifndef TANKBATTLE_H
 #define TANKBATTLE_H
 
+#include "ui_PlaneBattle.h"
 #include <QtWidgets/QMainWindow>
+#include <QGraphicsView>
+#include <QResizeEvent>
 #include <QKeyEvent>
 #include <QTimer>
-#include "ui_PlaneBattle.h"
 
 class TankBattle : public QMainWindow
 {
@@ -14,25 +16,15 @@ public:
 	TankBattle(QWidget *parent = 0);
 	~TankBattle();
 
+	/* 初始化窗口大小 */
 	void initWidget();
 
-	void keyPressEvent(QKeyEvent* event);
-	void keyReleaseEvent(QKeyEvent* event);
-
-private slots:
-	void controlerTimer();// 控制者的定时器
-	void refreshTimer();// 刷新定时器
+	/* 窗口大小改变事件响应函数 */
+	void resizeEvent(QResizeEvent* event);
 
 private:
 	Ui::PlaneBattleClass ui;
-
-	QTimer m_controlerTimer;// 控制者的定时器
-	QTimer m_refreshTimer;// 刷新定时器
-
-	bool m_bLeftMove;// 左移标志位
-	bool m_bRightMove;// 右移标志位
-	bool m_bUpMove;// 上移标志位
-	bool m_bDownMove;// 下移标志位
+	QGraphicsView* m_pView;
 };
 
 #endif // TANKBATTLE_H

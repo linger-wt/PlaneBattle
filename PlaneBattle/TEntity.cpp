@@ -3,6 +3,7 @@
 CTEntity::CTEntity(void)
 {
 	::CoCreateGuid(&m_id);
+	m_size = QSize(80,80); // 给实体定一个初始大小
 }
 
 CTEntity::~CTEntity(void)

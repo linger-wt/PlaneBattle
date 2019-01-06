@@ -1,17 +1,13 @@
 #include "PlaneBattle.h"
+#include "TGlobal.h"
+#include "TScene.h"
 #include <QPoint>
 
 TankBattle::TankBattle(QWidget *parent)
 	: QMainWindow(parent)
+	, m_pView(nullptr)
 {
 	ui.setupUi(this);
-	initWidget();
-
-	connect(&m_controlerTimer,SIGNAL(timeout()), this, SLOT(controlerTimer()));
-	m_controlerTimer.start(30);
-
-	connect(&m_refreshTimer,SIGNAL(timeout()), this, SLOT(refreshTimer()));
-	m_refreshTimer.start(17);// 刷新定时器按照1秒60帧的速率进行刷新
 }
 
 TankBattle::~TankBattle()
@@ -21,84 +17,39 @@ TankBattle::~TankBattle()
 
 void TankBattle::initWidget()
 {
-	QPixmap pix = QPixmap("plane_icon.png");
-	pix.scaled(ui.label_plane->size(), Qt::KeepAspectRatio);
-	ui.label_plane->setScaledContents(true);
-	ui.label_plane->setPixmap(pix);
-	ui.label_plane->show();
+	CTScenePtr pScene = CTGlobal::instance()->getScene();
+	if (pScene == nullptr)
+	{
+		return;
+	}
+	// 初始化界面
+	m_pView = new QGraphicsView();
+	m_pView->setScene(pScene.get()); // 将场景设置到QGraphicsView中
+	m_pView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // 隐藏垂直滚动条
+	m_pView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // 隐藏水平滚动条
+	setCentralWidget(m_pView); // 设置QGraphicsView为中心窗体
+
+	// 根据窗口大小设置场景边界
+	QRect rt = rect(), sceneRange;
+	sceneRange.setWidth(rt.width());
+	sceneRange.setHeight(rt.height());
+	pScene->setSceneRange(sceneRange);
+	
+	// 控制器初始化
+	CTGlobal::instance()->getControler()->init();
 }
 
-void TankBattle::keyPressEvent(QKeyEvent* event)
+void TankBattle::resizeEvent(QResizeEvent* event)
 {
-	if (event->key() == Qt::Key_Left)
+	CTScenePtr pScene = CTGlobal::instance()->getScene();
+	if (pScene == nullptr)
 	{
-		m_bLeftMove = true;
-		m_bRightMove = false;// 左右不能同移
+		return;
 	}
-	else if (event->key() == Qt::Key_Right)
-	{
-		m_bLeftMove = false;// 左右不能同移
-		m_bRightMove = true;
-	}
-	else if (event->key() == Qt::Key_Up)
-	{
-		m_bUpMove = true;
-		m_bDownMove = false;// 上下不能同移
-	}
-	else if (event->key() == Qt::Key_Down)
-	{
-		m_bUpMove = false;// 上下不能同移
-		m_bDownMove = true;
-	}
-}
 
-void TankBattle::keyReleaseEvent(QKeyEvent* event)
-{
-	if (event->key() == Qt::Key_Left)
-	{
-		m_bLeftMove = false;
-	}
-	else if (event->key() == Qt::Key_Right)
-	{
-		m_bRightMove = false;
-	}
-	else if (event->key() == Qt::Key_Up)
-	{
-		m_bUpMove = false;
-	}
-	else if (event->key() == Qt::Key_Down)
-	{
-		m_bDownMove = false;
-	}
-}
-
-void TankBattle::controlerTimer()
-{
-	// 获取当前位置
-	QPoint pt = ui.label_plane->pos();
-	// 位置变化量
-	QPoint dpt;
-	if (m_bLeftMove && pt.x()>0)
-	{
-		dpt.setX(-5);
-	}
-	if (m_bRightMove && pt.x()<size().width()-ui.label_plane->width())
-	{
-		dpt.setX(5);
-	}
-	if (m_bUpMove && pt.y()>0)
-	{
-		dpt.setY(-5);
-	}
-	if (m_bDownMove && pt.y()<size().height()-ui.label_plane->height())
-	{
-		dpt.setY(5);
-	}
-	pt = pt + dpt;
-	ui.label_plane->move(pt);
-}
-
-void TankBattle::refreshTimer()
-{
-
+	QSize rt = event->size();
+	QRect sceneRange(0,0,0,0);
+	sceneRange.setWidth(rt.width());
+	sceneRange.setHeight(rt.height());
+	pScene->setSceneRange(sceneRange);
 }

@@ -6,43 +6,28 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1060</width>
-    <height>916</height>
+    <width>761</width>
+    <height>977</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>飞机大战</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="label_plane">
-    <property name="geometry">
-     <rect>
-      <x>500</x>
-      <y>801</y>
-      <width>65</width>
-      <height>51</height>
-     </rect>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>10</number>
     </property>
-    <property name="minimumSize">
-     <size>
-      <width>65</width>
-      <height>0</height>
-     </size>
+    <property name="topMargin">
+     <number>10</number>
     </property>
-    <property name="text">
-     <string/>
+    <property name="rightMargin">
+     <number>10</number>
     </property>
-   </widget>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1060</width>
-     <height>23</height>
-    </rect>
-   </property>
+    <property name="bottomMargin">
+     <number>10</number>
+    </property>
+   </layout>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
